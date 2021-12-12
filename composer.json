@@ -1,0 +1,35 @@
+{
+    "name": "laravolt/metabase",
+    "description": "Embed Metabase dashboard and question in your application",
+    "keywords": [
+        "laravolt",
+        "laravel",
+        "metabase"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bayu Hendra Winata",
+            "email": "uyab.exe@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "lcobucci/jwt": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravolt\\Metabase\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravolt\\Metabase\\MetabaseServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
