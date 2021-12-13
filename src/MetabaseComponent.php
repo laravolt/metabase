@@ -26,9 +26,7 @@ class MetabaseComponent extends Component
     {
         $this->dashboard = $dashboard;
         $this->question = $question;
-        $this->params = empty($params) ? [
-            'param' => ''
-        ] : $params;
+        $this->params = $params;
     }
 
     /**
@@ -40,7 +38,7 @@ class MetabaseComponent extends Component
     {
         $metabase = app(MetabaseService::class);
         $metabase->setParams($this->params);
-        $iframeUrl = $metabase->generateDashboardUrl((int) $this->dashboard, (int) $this->question);
+        $iframeUrl = $metabase->generateEmbedUrl((int) $this->dashboard, (int) $this->question);
         return view('metabase::iframe', compact('iframeUrl'));
     }
 }
