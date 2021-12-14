@@ -3,24 +3,15 @@
 namespace Laravolt\Metabase;
 
 use Illuminate\Support\Facades\Blade;
-use Laravolt\Support\Base\BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class MetabaseServiceProvider extends BaseServiceProvider
+class MetabaseServiceProvider extends ServiceProvider
 {
-    /**
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return 'metabase';
-    }
-
     /**
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        parent::boot();
         Blade::component('metabase', MetabaseComponent::class);
     }
 }
