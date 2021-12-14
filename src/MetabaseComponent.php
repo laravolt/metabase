@@ -6,9 +6,9 @@ use Illuminate\View\Component;
 
 class MetabaseComponent extends Component
 {
-    public ?string $dashboard;
+    public ?int $dashboard;
 
-    public ?string $question;
+    public ?int $question;
 
     /**
      * @var string[]
@@ -18,11 +18,11 @@ class MetabaseComponent extends Component
     /**
      * Create a new component instance.
      *
-     * @param string|null $dashboard
-     * @param string|null $question
+     * @param int|null $dashboard
+     * @param int|null $question
      * @param array<string> $params
      */
-    public function __construct(?string $dashboard = null, ?string $question = null, array $params = [])
+    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [])
     {
         $this->dashboard = $dashboard;
         $this->question = $question;
