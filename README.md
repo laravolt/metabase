@@ -1,9 +1,23 @@
 # Laravolt Metabase
-Embed metabase dashboard or question in your website
+Blade component to embed metabase dashboard or question in your website
 
 ## Installation
 ```bash
 composer require laravolt/metabase
+```
+
+Add following entries to `config/services.php`:
+```php
+    'metabase' => [
+        'url' => env('METABASE_URL'),
+        'secret' => env('METABASE_SECRET'),
+    ],
+```
+
+And finally, update your `.env` file:
+```dotenv
+METABASE_URL=https://metabase.example.com
+METABASE_SECRET=secret
 ```
 
 ## Usage
