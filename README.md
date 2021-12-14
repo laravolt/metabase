@@ -8,10 +8,10 @@ composer require laravolt/metabase
 
 Add following entries to `config/services.php`:
 ```php
-    'metabase' => [
-        'url' => env('METABASE_URL'),
-        'secret' => env('METABASE_SECRET'),
-    ],
+'metabase' => [
+    'url' => env('METABASE_URL'),
+    'secret' => env('METABASE_SECRET'),
+],
 ```
 
 And finally, update your `.env` file:
@@ -29,6 +29,10 @@ METABASE_SECRET=secret
 
 ## Common Problems
 ### Embedding is not enabled for this object.
-TODO
-### Not found.
+Solution: https://www.metabase.com/learn/embedding/embedding-charts-and-dashboards
 
+### Not found.
+Solution: make sure your dashboard or question ID was correct
+
+### Message seems corrupt or manipulated.
+Solution: check your secret key.
