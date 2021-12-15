@@ -41,11 +41,12 @@ Metabase secret key can be found in metabase settings page (only accessible by a
  ```
 
 ## Common Problems
+
 ### Embedding is not enabled for this object.
 Solution: https://www.metabase.com/learn/embedding/embedding-charts-and-dashboards
 
 ### Not found.
-Solution: make sure your dashboard or question ID was correct
+Invalid dashboard or question ID.
 
 ### Message seems corrupt or manipulated.
-Solution: check your secret key.
+Invalid secret key.
