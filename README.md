@@ -35,7 +35,7 @@ Metabase secret key can be found in metabase settings page (only accessible by a
 <x-metabase question="2" width="80%" height="500px"></x-metabase>
 
 <!-- passing metabase parameters -->
-@php($params = ['id' => 'asdf'])
+@php($params = ['category' => 'php'])
 <x-metabase dashboard="1" :params="$params"></x-metabase> 
 // BEWARE of the colon in ":params" (not "param") because we are passing array variable directly to the component
  ```
