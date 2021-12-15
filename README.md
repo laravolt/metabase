@@ -1,5 +1,6 @@
 # Laravolt Metabase
-Blade component to embed metabase dashboard or question in your website
+Blade component to embed metabase dashboard or question in your website.
+For more information about Metabase, please visit [Metabase official website](https://metabase.com/).
 
 ## Installation
 ```bash
