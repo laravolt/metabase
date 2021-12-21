@@ -38,6 +38,9 @@ Metabase secret key can be found in metabase settings page (only accessible by a
 @php($params = ['category' => 'php'])
 <x-metabase dashboard="1" :params="$params"></x-metabase> 
 // BEWARE of the colon in ":params" (not "param") because we are passing array variable directly to the component
+ 
+<!-- passing additional metabase parameters -->
+<x-metabase dashboard="1" :params="$params" :bordered="false" titled theme="night"></x-metabase>
  ```
 
 ## Common Problems

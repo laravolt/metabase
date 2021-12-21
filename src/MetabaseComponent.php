@@ -10,6 +10,12 @@ class MetabaseComponent extends Component
 
     public ?int $question;
 
+    public bool $bordered;
+
+    public bool $titled;
+
+    public ?string $theme;
+
     /**
      * @var string[]
      */
@@ -22,11 +28,14 @@ class MetabaseComponent extends Component
      * @param int|null $question
      * @param array<string> $params
      */
-    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [])
+    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [], $bordered = true, $titled = false, $theme = null)
     {
         $this->dashboard = $dashboard;
         $this->question = $question;
         $this->params = $params;
+        $this->bordered = $bordered;
+        $this->titled = $titled;
+        $this->theme = $theme;
     }
 
     /**
@@ -38,7 +47,21 @@ class MetabaseComponent extends Component
     {
         $metabase = app(MetabaseService::class);
         $metabase->setParams($this->params);
+        $metabase->setAdditionalParams($this->getAdditionalParams());
         $iframeUrl = $metabase->generateEmbedUrl((int) $this->dashboard, (int) $this->question);
         return view('metabase::iframe', compact('iframeUrl'));
+    }
+
+
+    private function getAdditionalParams()
+    {
+        $additionalParameters['bordered'] = $this->bordered;
+        $additionalParameters['titled'] = $this->titled;
+
+        if($this->theme) {
+            $additionalParameters['theme'] = $this->theme;
+        }
+
+        return $additionalParameters;
     }
 }
