@@ -15,6 +15,11 @@ class MetabaseService
     private $params;
 
     /**
+     * @var array<string> @params
+     */
+    private $additionalParams;
+
+    /**
      * @param array<string> $params
      *
      * @return void
@@ -26,6 +31,16 @@ class MetabaseService
         }
 
         $this->params = $params;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return void
+     */
+    public function setAdditionalParams(array $params): void
+    {
+        $this->additionalParams = $params;
     }
 
     private string $type = 'dashboard';
@@ -62,7 +77,7 @@ class MetabaseService
             ->toString();
 
         return sprintf(
-            '%s/embed/%s/%s#bordered=true&titled=false',
+            '%s/embed/%s/%s#' . http_build_query($this->additionalParams),
             config('services.metabase.url'),
             $this->type,
             $token
