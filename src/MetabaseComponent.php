@@ -28,7 +28,7 @@ class MetabaseComponent extends Component
      * @param int|null $question
      * @param array<string> $params
      */
-    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [], $bordered = true, $titled = false, $theme = null)
+    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [], $bordered = false, $titled = false, $theme = null)
     {
         $this->dashboard = $dashboard;
         $this->question = $question;
