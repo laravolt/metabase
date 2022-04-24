@@ -26,10 +26,6 @@ class MetabaseService
      */
     public function setParams(array $params): void
     {
-        if (empty($params)) {
-            $params = ['foo' => null];
-        }
-
         $this->params = $params;
     }
 
@@ -70,14 +66,18 @@ class MetabaseService
             throw new InvalidArgumentException('Dashboard or question must be specified');
         }
 
-        $builder->withClaim('params', $this->params);
+        $params = $this->params;
+        if (empty($params)) {
+            $params = (object) $params;
+        }
+        $builder->withClaim('params', $params);
 
         $token = $builder
             ->getToken($config->signer(), $config->signingKey())
             ->toString();
 
         return sprintf(
-            '%s/embed/%s/%s#' . http_build_query($this->additionalParams),
+            '%s/embed/%s/%s#'.http_build_query($this->additionalParams),
             config('services.metabase.url'),
             $this->type,
             $token
