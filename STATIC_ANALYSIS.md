@@ -79,12 +79,11 @@ Static analysis runs automatically on:
 ### Bootstrap Files
 - `phpstan-bootstrap.php` - Custom Laravel helper function definitions for static analysis
 
-### Strict Rules Enabled
-- `checkMissingIterableValueType` - Requires specific array/collection types
-- `checkGenericClassInNonGenericObjectType` - Enforces generic type usage
-- `checkUninitializedProperties` - Detects uninitialized class properties
-- `checkTooWideReturnTypesInProtectedAndPublicMethods` - Ensures precise return types
-- `checkImplicitMixed` - Prevents implicit mixed types
+### Configuration Features
+- **Level 9 Analysis**: Maximum strictness for type checking
+- **Laravel Integration**: Full framework support via Larastan extension
+- **Custom Bootstrap**: Laravel helper function definitions
+- **Strategic Ignores**: Allows Laravel-specific patterns while maintaining strictness
 
 ### Laravel-Specific Handling
 - Ignores Laravel helper functions (`config()`, `view()`, `app()`)
@@ -106,7 +105,8 @@ Static analysis runs automatically on:
 1. **Memory Errors**: Increase memory limit in composer scripts
 2. **False Positives**: Add specific ignores to `phpstan.neon`
 3. **Missing Types**: Add proper PHPDoc annotations
-4. **Version Conflicts**: Ensure Laravel and Larastan versions are compatible:
+4. **Configuration Errors**: Ensure only valid PHPStan parameters are used
+5. **Version Conflicts**: Ensure Laravel and Larastan versions are compatible:
    ```bash
    # For Laravel 10-11
    composer require --dev "larastan/larastan:^2.0"
