@@ -9,9 +9,9 @@ class EmbedController extends Controller
     /**
      * @param int $id
      * @param array<string> $params
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View
      */
-    public function show(int $id, $params = [])
+    public function show(int $id, array $params = []): \Illuminate\Contracts\View\View
     {
         return view('metabase::embed.show', compact('id', 'params'));
     }

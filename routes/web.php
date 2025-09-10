@@ -1,12 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Laravolt\Metabase\Controllers\EmbedController;
+
 Route::group(
     [
-        'prefix' => config('laravolt.metabase.route.prefix'),
+        'prefix' => config('metabase.route.prefix'),
         'as' => 'metabase::',
-        'middleware' => config('laravolt.metabase.route.middleware'),
+        'middleware' => config('metabase.route.middleware'),
     ],
     function () {
-        Route::resource('embed', \Laravolt\Metabase\Controllers\EmbedController::class)->only('show');
+        Route::resource('embed', EmbedController::class)->only('show');
     }
 );
