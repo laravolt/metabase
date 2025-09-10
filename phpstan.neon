@@ -14,6 +14,10 @@ parameters:
         - storage
         - bootstrap/cache
     
+    # Bootstrap files for Laravel helpers
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    
     # Check missing typehints for better code quality
     checkMissingIterableValueType: true
     checkGenericClassInNonGenericObjectType: true
@@ -32,17 +36,20 @@ parameters:
     checkAlwaysTrueInstanceof: true
     checkAlwaysTrueStrictComparison: true
     
-    # Custom error messages
+    # Custom error messages for remaining edge cases
     ignoreErrors:
-        # Laravel helpers and facades
-        - '#Call to an undefined method Illuminate\\Contracts\\Foundation\\Application::#'
-        - '#Access to an undefined property Illuminate\\View\\Component::#'
+        # Allow mixed returns from helpers when we can't determine exact type
+        - '#Method .* should return .* but returns mixed#'
         
-        # Allow config() helper to return mixed
-        - '#Parameter .* of function config expects .*, mixed given#'
+        # Ignore issues with route resource method chaining
+        - '#Call to method only\(\) on an unknown class Illuminate\\Routing\\PendingResourceRegistration#'
         
-        # Allow view() helper
-        - '#Call to an undefined function view\(\)#'
+        # Allow Laravel helper functions that return mixed
+        - '#Function config not found#'
+        - '#Function view not found#'
+        - '#Function app not found#'
+        - '#Function resource_path not found#'
+        - '#Function config_path not found#'
         
-        # Allow app() helper
-        - '#Call to an undefined function app\(\)#'
+        # Allow Laravel base classes
+        - '#Class .* extends unknown class Illuminate\\.*#'

@@ -5,6 +5,8 @@ composer.phar
 phpstan-baseline.neon
 .phpunit.result.cache
 
+# Development files (keep phpstan-bootstrap.php in repo for static analysis)
+
 # IDE
 .vscode/
 .idea/

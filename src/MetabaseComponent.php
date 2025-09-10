@@ -53,7 +53,10 @@ class MetabaseComponent extends Component
         $metabase->setParams($this->params ?? []);
         $metabase->setAdditionalParams($this->getAdditionalParams());
         $iframeUrl = $metabase->generateEmbedUrl($this->dashboard, $this->question);
-        return view('metabase::iframe', compact('iframeUrl'));
+        
+        /** @var \Illuminate\Contracts\View\View $view */
+        $view = view('metabase::iframe', compact('iframeUrl'));
+        return $view;
     }
 
 

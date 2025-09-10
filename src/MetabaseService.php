@@ -47,9 +47,9 @@ class MetabaseService
      */
     public function generateEmbedUrl(?int $dashboard, ?int $question): string
     {
-        /** @var string|null $secret */
+        /** @var mixed $secret */
         $secret = config('services.metabase.secret');
-        /** @var string|null $baseUrl */
+        /** @var mixed $baseUrl */
         $baseUrl = config('services.metabase.url');
         
         if (empty($secret) || !is_string($secret)) {

@@ -25,7 +25,9 @@ class MetabaseServiceProvider extends ServiceProvider
         ], 'metabase-config');
 
         // Load routes if enabled
-        if (config('metabase.route.enabled', true)) {
+        /** @var mixed $routeEnabled */
+        $routeEnabled = config('metabase.route.enabled', true);
+        if ($routeEnabled) {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         }
 

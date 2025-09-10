@@ -76,6 +76,9 @@ Static analysis runs automatically on:
 - `storage/` - Laravel storage directory
 - `bootstrap/cache/` - Laravel cache files
 
+### Bootstrap Files
+- `phpstan-bootstrap.php` - Custom Laravel helper function definitions for static analysis
+
 ### Strict Rules Enabled
 - `checkMissingIterableValueType` - Requires specific array/collection types
 - `checkGenericClassInNonGenericObjectType` - Enforces generic type usage
