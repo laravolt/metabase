@@ -53,3 +53,18 @@ Invalid dashboard or question ID.
 
 ### Message seems corrupt or manipulated.
 Invalid secret key.
+
+## Development
+
+This package uses [Larastan](https://github.com/larastan/larastan) for static analysis at level 9 to ensure code quality.
+
+### Running Static Analysis
+```bash
+composer phpstan
+```
+
+### Requirements
+- PHP 8.2+
+- Laravel 8.0+ (supports up to Laravel 12.x)
+
+For detailed static analysis information, see [STATIC_ANALYSIS.md](STATIC_ANALYSIS.md).

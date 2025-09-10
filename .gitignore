@@ -1,3 +1,17 @@
 composer.phar
 composer.lock
 /vendor/
+
+# PHPStan
+phpstan-baseline.neon
+.phpunit.result.cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

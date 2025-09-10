@@ -47,15 +47,17 @@ class MetabaseService
      */
     public function generateEmbedUrl(?int $dashboard, ?int $question): string
     {
+        /** @var string|null $secret */
         $secret = config('services.metabase.secret');
+        /** @var string|null $baseUrl */
         $baseUrl = config('services.metabase.url');
         
-        if (empty($secret)) {
-            throw new InvalidArgumentException('Metabase secret is not configured');
+        if (empty($secret) || !is_string($secret)) {
+            throw new InvalidArgumentException('Metabase secret is not configured or invalid');
         }
         
-        if (empty($baseUrl)) {
-            throw new InvalidArgumentException('Metabase URL is not configured');
+        if (empty($baseUrl) || !is_string($baseUrl)) {
+            throw new InvalidArgumentException('Metabase URL is not configured or invalid');
         }
 
         $config = Configuration::forSymmetricSigner(

@@ -1,0 +1,48 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 9
+    paths:
+        - src
+        - config
+        - routes
+    
+    # Ignore errors in generated files and vendor directories
+    excludePaths:
+        - vendor
+        - storage
+        - bootstrap/cache
+    
+    # Check missing typehints for better code quality
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: true
+    checkUninitializedProperties: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkImplicitMixed: true
+    
+    # Laravel specific configurations
+    treatPhpDocTypesAsCertain: false
+    
+    # Additional rules for better analysis
+    reportUnmatchedIgnoredErrors: false
+    
+    # Blade template analysis
+    checkAlwaysTrueCheckTypeFunctionCall: true
+    checkAlwaysTrueInstanceof: true
+    checkAlwaysTrueStrictComparison: true
+    
+    # Custom error messages
+    ignoreErrors:
+        # Laravel helpers and facades
+        - '#Call to an undefined method Illuminate\\Contracts\\Foundation\\Application::#'
+        - '#Access to an undefined property Illuminate\\View\\Component::#'
+        
+        # Allow config() helper to return mixed
+        - '#Parameter .* of function config expects .*, mixed given#'
+        
+        # Allow view() helper
+        - '#Call to an undefined function view\(\)#'
+        
+        # Allow app() helper
+        - '#Call to an undefined function app\(\)#'

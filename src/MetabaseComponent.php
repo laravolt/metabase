@@ -17,7 +17,7 @@ class MetabaseComponent extends Component
     public ?string $theme;
 
     /**
-     * @var string[]
+     * @var array<string, mixed>|null
      */
     public ?array $params;
 
@@ -26,7 +26,7 @@ class MetabaseComponent extends Component
      *
      * @param int|null $dashboard
      * @param int|null $question
-     * @param array<string> $params
+     * @param array<string, mixed> $params
      * @param bool $bordered
      * @param bool $titled
      * @param string|null $theme
@@ -48,6 +48,7 @@ class MetabaseComponent extends Component
      */
     public function render(): \Illuminate\Contracts\View\View
     {
+        /** @var MetabaseService $metabase */
         $metabase = app(MetabaseService::class);
         $metabase->setParams($this->params ?? []);
         $metabase->setAdditionalParams($this->getAdditionalParams());
