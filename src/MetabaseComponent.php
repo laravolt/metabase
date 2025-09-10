@@ -27,8 +27,11 @@ class MetabaseComponent extends Component
      * @param int|null $dashboard
      * @param int|null $question
      * @param array<string> $params
+     * @param bool $bordered
+     * @param bool $titled
+     * @param string|null $theme
      */
-    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [], $bordered = false, $titled = false, $theme = null)
+    public function __construct(?int $dashboard = null, ?int $question = null, array $params = [], bool $bordered = false, bool $titled = false, ?string $theme = null)
     {
         $this->dashboard = $dashboard;
         $this->question = $question;
@@ -41,24 +44,31 @@ class MetabaseComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|string
+     * @return \Illuminate\Contracts\View\View
      */
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $metabase = app(MetabaseService::class);
-        $metabase->setParams($this->params);
+        $metabase->setParams($this->params ?? []);
         $metabase->setAdditionalParams($this->getAdditionalParams());
-        $iframeUrl = $metabase->generateEmbedUrl((int) $this->dashboard, (int) $this->question);
+        $iframeUrl = $metabase->generateEmbedUrl($this->dashboard, $this->question);
         return view('metabase::iframe', compact('iframeUrl'));
     }
 
 
-    private function getAdditionalParams()
+    /**
+     * Get additional parameters for the iframe URL.
+     *
+     * @return array<string, mixed>
+     */
+    private function getAdditionalParams(): array
     {
-        $additionalParameters['bordered'] = $this->bordered;
-        $additionalParameters['titled'] = $this->titled;
+        $additionalParameters = [
+            'bordered' => $this->bordered,
+            'titled' => $this->titled,
+        ];
 
-        if($this->theme) {
+        if ($this->theme) {
             $additionalParameters['theme'] = $this->theme;
         }
 
