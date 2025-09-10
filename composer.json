@@ -16,12 +16,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/support": "12.*",
         "lcobucci/jwt": "^4.1|^5.0"
-    },
-    "require-dev": {
-        "larastan/larastan": "^2.0|^3.1",
-        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +32,7 @@
         }
     },
     "scripts": {
-        "phpstan": "phpstan analyse --memory-limit=1G",
+        "phpstan": "phpstan analyse",
         "phpstan-baseline": "phpstan analyse --generate-baseline --memory-limit=1G",
         "phpstan-clear": "phpstan clear-result-cache",
         "test-static": "@phpstan",
@@ -46,5 +42,8 @@
         ]
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "larastan/larastan": "^3.7"
+    }
 }

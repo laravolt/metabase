@@ -7,49 +7,47 @@ parameters:
         - src
         - config
         - routes
-    
+
     # Ignore errors in generated files and vendor directories
     excludePaths:
         - vendor
-        - storage
-        - bootstrap/cache
-    
+
     # Bootstrap files for Laravel helpers
     bootstrapFiles:
         - phpstan-bootstrap.php
-    
+
     # Check missing typehints for better code quality
     checkMissingIterableValueType: true
     checkGenericClassInNonGenericObjectType: true
     checkUninitializedProperties: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
     checkImplicitMixed: true
-    
+
     # Laravel specific configurations
     treatPhpDocTypesAsCertain: false
-    
+
     # Additional rules for better analysis
     reportUnmatchedIgnoredErrors: false
-    
+
     # Blade template analysis
     checkAlwaysTrueCheckTypeFunctionCall: true
     checkAlwaysTrueInstanceof: true
     checkAlwaysTrueStrictComparison: true
-    
+
     # Custom error messages for remaining edge cases
     ignoreErrors:
         # Allow mixed returns from helpers when we can't determine exact type
         - '#Method .* should return .* but returns mixed#'
-        
+
         # Ignore issues with route resource method chaining
         - '#Call to method only\(\) on an unknown class Illuminate\\Routing\\PendingResourceRegistration#'
-        
+
         # Allow Laravel helper functions that return mixed
         - '#Function config not found#'
         - '#Function view not found#'
         - '#Function app not found#'
         - '#Function resource_path not found#'
         - '#Function config_path not found#'
-        
+
         # Allow Laravel base classes
         - '#Class .* extends unknown class Illuminate\\.*#'
