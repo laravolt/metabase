@@ -6,6 +6,15 @@ This package uses [Larastan](https://github.com/larastan/larastan) (PHPStan for 
 
 The static analysis is configured at **level 9** (the highest level) in `phpstan.neon` for maximum code quality assurance.
 
+### Version Compatibility
+
+Due to Larastan's version constraints, different Laravel versions require different Larastan versions:
+
+- **Laravel 8-11**: Uses Larastan `^2.0`
+- **Laravel 12**: Uses Larastan `^3.1` (when available)
+
+The package automatically handles these constraints in `composer.json`.
+
 ### Key Features
 
 - **Level 9 Analysis**: The strictest level of static analysis
@@ -50,7 +59,10 @@ Static analysis runs automatically on:
 - Push to main/master/develop branches  
 - Pull requests to main/master/develop branches
 - Multiple PHP versions (8.2, 8.3)
-- Multiple Laravel versions (10.x, 11.x, 12.x)
+- Multiple Laravel versions with compatible Larastan versions:
+  - Laravel 10.x + Larastan 2.x
+  - Laravel 11.x + Larastan 2.x  
+  - Laravel 12.x + Larastan 3.x
 
 ## Configuration Details
 
@@ -91,6 +103,14 @@ Static analysis runs automatically on:
 1. **Memory Errors**: Increase memory limit in composer scripts
 2. **False Positives**: Add specific ignores to `phpstan.neon`
 3. **Missing Types**: Add proper PHPDoc annotations
+4. **Version Conflicts**: Ensure Laravel and Larastan versions are compatible:
+   ```bash
+   # For Laravel 10-11
+   composer require --dev "larastan/larastan:^2.0"
+   
+   # For Laravel 12
+   composer require --dev "larastan/larastan:^3.1"
+   ```
 
 ### Baseline Usage
 
