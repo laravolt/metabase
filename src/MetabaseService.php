@@ -2,9 +2,10 @@
 
 namespace Laravolt\Metabase;
 
+use stdClass;
 use Firebase\JWT\JWT;
-use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
+use Illuminate\Support\Facades\Log;
 
 class MetabaseService
 {
@@ -58,21 +59,30 @@ class MetabaseService
         }
 
         // Build the payload
-        $payload = [];
+        $resource = [];
 
         if ($dashboard !== null) {
-            $payload['resource'] = ['dashboard' => $dashboard];
+            $resource = ['dashboard' => $dashboard];
             $this->type = 'dashboard';
         } elseif ($question !== null) {
-            $payload['resource'] = ['question' => $question];
+            $resource = ['question' => $question];
             $this->type = 'question';
         } else {
             throw new InvalidArgumentException('Either dashboard or question must be specified');
         }
 
-        if (!empty($this->params)) {
-            $payload['params'] = $this->params;
-        }
+        $params = new stdClass(); // Default to empty object
+
+        // TODO: Still need to check this logic later
+        // if (count($this->params) > 0) {
+        //     $params = (object) $this->params;
+        // }
+
+        $payload = [
+            "resource" => $resource,
+            "params" => $params,
+            "exp" => time() + (10 * 60) // 10 menit ke depan
+        ];
 
         // Set expiration time (10 minutes from now)
         $payload['exp'] = time() + (10 * 60);
