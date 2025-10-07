@@ -2,10 +2,9 @@
 
 namespace Laravolt\Metabase;
 
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
-use Lcobucci\JWT\Configuration;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key\InMemory;
 
 class MetabaseService
 {
@@ -49,38 +48,46 @@ class MetabaseService
     {
         $secret = config('services.metabase.secret');
         $baseUrl = config('services.metabase.url');
-        
+
         if (empty($secret)) {
             throw new InvalidArgumentException('Metabase secret is not configured');
         }
-        
+
         if (empty($baseUrl)) {
             throw new InvalidArgumentException('Metabase URL is not configured');
         }
 
-        $config = Configuration::forSymmetricSigner(
-            new Sha256(),
-            InMemory::plainText($secret)
-        );
-
-        $builder = $config->builder();
+        // Build the payload
+        $payload = [];
 
         if ($dashboard !== null) {
-            $builder->withClaim('resource', ['dashboard' => $dashboard]);
+            $payload['resource'] = ['dashboard' => $dashboard];
             $this->type = 'dashboard';
         } elseif ($question !== null) {
-            $builder->withClaim('resource', ['question' => $question]);
+            $payload['resource'] = ['question' => $question];
             $this->type = 'question';
         } else {
             throw new InvalidArgumentException('Either dashboard or question must be specified');
         }
 
-        $params = empty($this->params) ? (object) [] : $this->params;
-        $builder->withClaim('params', $params);
+        if (!empty($this->params)) {
+            $payload['params'] = $this->params;
+        }
 
-        $token = $builder
-            ->getToken($config->signer(), $config->signingKey())
-            ->toString();
+        // Set expiration time (10 minutes from now)
+        $payload['exp'] = time() + (10 * 60);
+
+        // Generate JWT token using Firebase JWT
+        $token = JWT::encode($payload, $secret, 'HS256');
+
+        // Debug: Log the payload
+        Log::info('Metabase JWT Token Payload:', [
+            'payload' => $payload,
+            'dashboard' => $dashboard,
+            'question' => $question,
+            'params' => $this->params,
+            'type' => $this->type
+        ]);
 
         $additionalQuery = !empty($this->additionalParams) ? '#' . http_build_query($this->additionalParams) : '';
 
