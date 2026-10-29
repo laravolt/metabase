@@ -4,6 +4,7 @@ namespace Laravolt\Metabase\Tests;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Laravolt\Metabase\MetabaseService;
 use Laravolt\Metabase\MetabaseServiceProvider;
@@ -56,6 +57,17 @@ class MetabaseServiceTest extends TestCase
 
         $this->assertStringStartsWith('https://metabase.example.com/embed/question/', $url);
         $this->assertStringEndsWith('#bordered=false&titled=true', $url);
+    }
+
+    #[Test]
+    public function it_does_not_log_the_embed_payload(): void
+    {
+        Log::spy();
+
+        (new MetabaseService())->generateEmbedUrl(12, null);
+
+        Log::shouldNotHaveReceived('info');
+        Log::shouldNotHaveReceived('debug');
     }
 
     #[Test]
