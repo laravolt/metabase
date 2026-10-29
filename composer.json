@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "illuminate/support": "^12.0|^13.0",
+        "illuminate/support": "^12.68|^13.29",
         "firebase/php-jwt": "^7.2"
     },
     "autoload": {
