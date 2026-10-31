@@ -5,7 +5,6 @@ namespace Laravolt\Metabase;
 use stdClass;
 use Firebase\JWT\JWT;
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Log;
 
 class MetabaseService
 {
@@ -89,15 +88,6 @@ class MetabaseService
 
         // Generate JWT token using Firebase JWT
         $token = JWT::encode($payload, $secret, 'HS256');
-
-        // Debug: Log the payload
-        Log::info('Metabase JWT Token Payload:', [
-            'payload' => $payload,
-            'dashboard' => $dashboard,
-            'question' => $question,
-            'params' => $this->params,
-            'type' => $this->type
-        ]);
 
         $additionalQuery = !empty($this->additionalParams) ? '#' . http_build_query($this->additionalParams) : '';
 
