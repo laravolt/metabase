@@ -70,12 +70,8 @@ class MetabaseService
             throw new InvalidArgumentException('Either dashboard or question must be specified');
         }
 
-        $params = new stdClass(); // Default to empty object
-
-        // TODO: Still need to check this logic later
-        // if (count($this->params) > 0) {
-        //     $params = (object) $this->params;
-        // }
+        // Metabase expects an object; an empty array would encode as [].
+        $params = count($this->params) > 0 ? (object) $this->params : new stdClass();
 
         $payload = [
             "resource" => $resource,

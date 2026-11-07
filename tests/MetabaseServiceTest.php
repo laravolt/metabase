@@ -13,7 +13,7 @@ use PHPUnit\Framework\Attributes\Test;
 
 class MetabaseServiceTest extends TestCase
 {
-    private const SECRET = 'a3f1c2e4b5d6a7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f70';
+    private const SECRET = 'test-only-placeholder-not-a-metabase-embedding-key-0000000000000';
 
     protected function getPackageProviders($app): array
     {
@@ -48,6 +48,28 @@ class MetabaseServiceTest extends TestCase
     }
 
     #[Test]
+    public function it_signs_the_given_params_into_the_token(): void
+    {
+        $service = new MetabaseService();
+        $service->setParams(['category' => 'php', 'user_id' => 7]);
+
+        $payload = $this->decode($service->generateEmbedUrl(12, null), 'dashboard');
+
+        $this->assertSame('php', $payload->params->category);
+        $this->assertSame(7, $payload->params->user_id);
+    }
+
+    #[Test]
+    public function it_signs_an_empty_params_object_when_none_are_given(): void
+    {
+        $payload = $this->decode((new MetabaseService())->generateEmbedUrl(12, null), 'dashboard');
+
+        // Metabase needs a JSON object here; an empty array would decode as [].
+        $this->assertInstanceOf(\stdClass::class, $payload->params);
+        $this->assertSame([], (array) $payload->params);
+    }
+
+    #[Test]
     public function it_generates_a_question_embed_url_with_additional_params(): void
     {
         $service = new MetabaseService();
@@ -68,6 +90,13 @@ class MetabaseServiceTest extends TestCase
 
         Log::shouldNotHaveReceived('info');
         Log::shouldNotHaveReceived('debug');
+    }
+
+    private function decode(string $url, string $type): object
+    {
+        $token = substr($url, strlen("https://metabase.example.com/embed/{$type}/"));
+
+        return JWT::decode($token, new Key(self::SECRET, 'HS256'));
     }
 
     #[Test]
