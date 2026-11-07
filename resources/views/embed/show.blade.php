@@ -1,4 +1,4 @@
-@extends(config('laravolt.metabase.view.layout'))
+@extends(config('metabase.view.layout'))
 @section('content')
     <x-metabase :dashboard="$id" :params="$params"></x-metabase>
 @endsection

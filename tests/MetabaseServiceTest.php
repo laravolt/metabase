@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Laravolt\Metabase\MetabaseService;
 use Laravolt\Metabase\MetabaseServiceProvider;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
 use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -26,10 +27,23 @@ class MetabaseServiceTest extends TestCase
         $app['config']->set('services.metabase.url', 'https://metabase.example.com/');
     }
 
+    protected function enableRoute($app): void
+    {
+        $app['config']->set('metabase.route.enabled', true);
+    }
+
     #[Test]
-    public function it_registers_package_config_and_routes(): void
+    public function it_does_not_register_the_embed_route_by_default(): void
     {
         $this->assertSame('metabase', config('metabase.route.prefix'));
+        $this->assertFalse(config('metabase.route.enabled'));
+        $this->assertFalse(app('router')->has('metabase::embed.show'));
+    }
+
+    #[Test]
+    #[DefineEnvironment('enableRoute')]
+    public function it_registers_the_embed_route_when_enabled(): void
+    {
         $this->assertTrue(app('router')->has('metabase::embed.show'));
     }
 

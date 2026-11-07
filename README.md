@@ -43,6 +43,23 @@ Metabase secret key can be found in metabase settings page (only accessible by a
 <x-metabase dashboard="1" :params="$params" :bordered="false" titled theme="night"></x-metabase>
  ```
 
+## Embed route (opt-in)
+The package can register `GET /metabase/embed/{id}`, which signs an embed for the dashboard id in the URL.
+It is **off by default** because it signs any id the caller asks for. Turn it on only behind middleware that checks the viewer may see those dashboards:
+
+```dotenv
+METABASE_ROUTE_ENABLED=true
+```
+
+```php
+// config/metabase.php (publish with: php artisan vendor:publish --tag=metabase-config)
+'route' => [
+    'enabled' => env('METABASE_ROUTE_ENABLED', false),
+    'middleware' => ['web', 'auth', 'can:view-dashboards'],
+    'prefix' => 'metabase',
+],
+```
+
 ## Common Problems
 
 ### Embedding is not enabled for this object.
